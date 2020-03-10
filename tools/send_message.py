@@ -1,6 +1,6 @@
 import requests
 
-from wyk_cmfw import settings
+from CMFW_WYK import settings
 
 
 

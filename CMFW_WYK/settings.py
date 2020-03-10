@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'article',
     'rbac',
     'jiekou',
+    'login',
 ]
 
 MIDDLEWARE = [

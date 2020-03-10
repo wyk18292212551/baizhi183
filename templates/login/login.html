@@ -91,7 +91,7 @@
                         success: function (data) {
                             alert(data);
                             if (data === '验证成功') {
-                                location.href = "{% url 'indexapp:index' %}"
+                                location.href = "{% url 'lunbo:home' %}"
                             } else {
                                 $('#loginForm').reset()
                             }

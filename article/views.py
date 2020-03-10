@@ -127,7 +127,7 @@ def xiugai(request):
             return JsonResponse({"error":0})
         return JsonResponse({"error": 1, "msg": "请认真填写信息！"})
     except:
-        return redirect("index:index")
+        return redirect("lunbo:home")
 @csrf_exempt
 def edit(request):
     """

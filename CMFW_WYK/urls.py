@@ -24,4 +24,5 @@ urlpatterns = [
     path('article/',include('article.urls')),
     path('rbac/',include('rbac.urls')),
     path('jiekou/',include('jiekou.urls')),
+    path('login/',include('login.urls')),
 ]
