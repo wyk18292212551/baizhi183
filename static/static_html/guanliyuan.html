@@ -1,0 +1,371 @@
+<script>
+    $(function () {
+        $("#bannerTable").jqGrid({
+            url: "/day7/get_data/",
+            datatype: "json",
+            styleUI: "Bootstrap",
+            autowidth: true,
+            height: 300,
+            pager: "#bannerPagerNew",
+            viewrecords: true,
+            rownumbers: true,
+            cellEdit: true,
+            hiddengrid: false,
+            multiselect: false,
+            rowNum: 3,
+            rowList: [2, 3, 4],
+            editurl: "/day7/edit/",
+            colNames: ["编号", "标题", "状态", "描述", "创建时间", "图片", "操作"],
+            colModel: [
+                {name: "id", align: "center",},
+                {name: "title", align: "center", editable: true, editrules: {required: true}},
+                {
+                    name: "status", align: "center", editable: true, edittype: "select", editoptions: {
+                        value: "展示:展示;不展示:不展示",
+                    }
+                },
+                {name: "description", align: "center", editable: true, editrules: {required: true}},
+                {
+                    name: "createDate",
+                    align: "center",
+                },
+                {
+                    name: "url",
+                    align: "center",
+                    formatter: function (cellValue) {
+                        return "<img style='height: 80px;width: 180px' src='/static/" + cellValue + " '/>"
+                    },
+                },
+                {
+                    name: "option", formatter: function (cellvalue, options, rowObject) {
+                        return "<button class=\"btn btn-info\" onclick=edit(" + rowObject.id + ")><span class=\"glyphicon glyphicon-edit\"></span> 修改</button>" +
+                            "<button class=\"btn btn-danger\" onclick=del(" + rowObject.id + ")><span class=\"glyphicon glyphicon-trash\"></span> 删除</button>";
+                    }
+                }
+
+            ],
+
+        });
+
+
+        // 提交模态框  完成轮播图的上传
+        $('#save').click(function () {
+
+            // ajax完成文件上传需要使用formdata对象
+            var name = $.trim($("#upload_name").val());
+            var status = $.trim($("#upload_status").val());
+            var pic = $("#upload_pic")[0].files[0];
+            var miaoshu = $.trim($("#upload_miaoshu").val());
+            var formdata = new FormData();
+            console.log(status)
+            formdata.append("name", name);
+            formdata.append("status", status);
+            formdata.append("pic", pic);
+            formdata.append("miaoshu", miaoshu);
+            $.ajax({
+                url: "/day7/add_banner/",
+                type: "post",
+                datatype: "json",
+                data: formdata,
+                processData: false,         // 使表单对象不被调整
+                contentType: false,         // 不要设置contentType请求头
+                success: function (data) {
+                    console.log(data);
+                    if (data.error == 1) {
+                        alert(data.msg)
+                    } else {
+                        $("#myModal").modal("hide");
+                        // 刷新表格
+                        $("#bannerTable").trigger("reloadGrid")
+                    }
+                }
+            });
+        });
+    });
+
+
+    $('#updata').click(function () {
+        // ajax完成文件上传需要使用formdata对象
+        var id = $.trim($("#upload_id").val());
+        var name = $.trim($("#upload_name2").val());
+        var status = $.trim($("#upload_status2").val());
+        var miaoshu = $.trim($("#upload_miaoshu2").val());
+        console.log(name)
+        console.log(status)
+        var formdata = new FormData();
+        formdata.append("id", id);
+        formdata.append("name", name);
+        formdata.append("status", status);
+        formdata.append("miaoshu", miaoshu);
+        $.ajax({
+            url: "/day7/updateemp/",
+            type: "post",
+            datatype: "json",
+            data: formdata,
+            processData: false,         // 使表单对象不被调整
+            contentType: false,         // 不要设置contentType请求头
+            success: function (data) {
+                console.log(data);
+                if (data.error == 1) {
+                    alert(data.msg)
+                } else {
+                    $("#myModal2").modal("hide");
+                    // 刷新表格
+                    $("#bannerTable").trigger("reloadGrid")
+                }
+            }
+        });
+    });
+
+
+    $('#dele111').click(function () {
+        // ajax完成文件上传需要使用formdata对象
+        var id = $.trim($("#upload_id2").val());
+        var formdata = new FormData();
+        formdata.append("id", id);
+        $.ajax({
+            url: "/day7/deless/",
+            type: "post",
+            datatype: "json",
+            data: formdata,
+            processData: false,         // 使表单对象不被调整
+            contentType: false,         // 不要设置contentType请求头
+            success: function (data) {
+                console.log(data);
+                if (data.error == 1) {
+                    alert(data.msg)
+                } else {
+                    $("#myModal3").modal("hide");
+                    // 刷新表格
+                    $("#bannerTable").trigger("reloadGrid")
+                }
+            }
+        });
+    });
+
+
+    function edit(id) {
+        $("#bannerTable").jqGrid('editGridRow', id, {
+            reloadAfterSubmit: false
+
+        });
+        $("#bannerTable").trigger("reloadGrid")
+    }
+
+
+    function del(id) {
+        $("#bannerTable").jqGrid('delGridRow', id, {
+            reloadAfterSubmit: false
+        });
+    }
+</script>
+
+
+<div class="page-header">
+    <h2>管理员管理</h2>
+</div>
+<ul class="nav nav-tabs ">
+    <li class="active"><a href="#"><b>管理员信息</b></a></li>
+</ul>
+
+<div class="panel panel-default" style="padding: 40px">
+    <table id="bannerTable"></table>
+    <div class="alert alert-success" role="alert" id="addBannerMsg" style="display: none">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <strong id="msgShow"></strong>
+    </div>
+    <div id="bannerPagerNew" style="width: auto;height: 50px"></div>
+    <button class="btn btn-primary" data-aa="@456" data-whatever="@123" id="btn" data-toggle="modal"
+            data-target="#myModal">添加
+    </button>
+
+    <button class="btn btn-warning" id="edit" data-aa="@456" data-whatever="@123" data-toggle="modal"
+            data-target="#myModal2">
+        修改
+    </button>
+
+    <button class="btn btn-danger" id="del" data-aa="@456" data-whatever="@123" data-toggle="modal"
+            data-target="#myModal3">
+        删除
+    </button>
+</div>
+
+
+<body>
+
+<!--<button class="btn btn-default" data-aa="@456" data-whatever="@123" id="btn" data-toggle="modal" data-target="#myModal">添加</button>-->
+
+<!--静态模态框-->
+
+<div class="modal fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+    <div class="modal-dialog">
+        <!--模态框内容-->
+        <div class="modal-content">
+            <!--模态框标题-->
+            <div class="modal-header">
+                <!--
+                关闭模态框的属性：data-dismiss="modal"
+                -->
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">管理员管理</h4>
+            </div>
+            <!--模态框内容体-->
+            <form action="" id="bannerForm">
+                <div class="modal-body form-horizontal">
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">图片名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" id="upload_name" class="form-control" placeholder="请输入姓名">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="status" id="upload_status">
+                                <option value="展示">展示</option>
+                                <option value="不展示">不展示</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">描述：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="miaoshu" id="upload_miaoshu" class="form-control"
+                                   placeholder="请输入您的描述">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">图片：</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="pic" id="upload_pic" class="form-control" placeholder="请选择图片">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- <button type="button" class="btn btn-primary" id="save" >保存</button>-->
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal2">
+    <div class="modal-dialog">
+        <!--模态框内容-->
+        <div class="modal-content">
+            <!--模态框标题-->
+            <div class="modal-header">
+                <!--
+                关闭模态框的属性：data-dismiss="modal"
+                -->
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">管理员管理</h4>
+            </div>
+            <!--模态框内容体-->
+            <form action="" id="bannerForm2">
+                <div class="modal-body form-horizontal">
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">修改的ID：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="id" id="upload_id" class="form-control" placeholder="请输入要修改的ID">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">图片名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" id="upload_name2" class="form-control" placeholder="请输入姓名">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="status" id="upload_status2">
+                                <option value="展示">展示</option>
+                                <option value="不展示">不展示</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="status" id="upload_status2" class="form-control"
+                                   placeholder="请输入状态">
+                        </div>
+                    </div>
+
+                    -->
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">描述：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="miaoshu" id="upload_miaoshu2" class="form-control"
+                                   placeholder="请输入您的描述">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- <button type="button" class="btn btn-primary" id="save" >保存</button>-->
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="updata">保存</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal3">
+    <div class="modal-dialog">
+        <!--模态框内容-->
+        <div class="modal-content">
+            <!--模态框标题-->
+            <div class="modal-header">
+                <!--
+                关闭模态框的属性：data-dismiss="modal"
+                -->
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">管理员管理</h4>
+            </div>
+            <!--模态框内容体-->
+            <form action="" id="bannerForm3">
+                <div class="modal-body form-horizontal">
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">删除的ID：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="id" id="upload_id2" class="form-control" placeholder="请输入要删除的ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- <button type="button" class="btn btn-primary" id="save" >保存</button>-->
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="dele111">确认删除</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>

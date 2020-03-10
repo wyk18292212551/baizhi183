@@ -1,0 +1,49 @@
+ <div class="page-header">
+    <h2>用户日注册量</h2>
+</div>
+
+
+   <div id="main" style="width: 1000px;height:400px; "></div>
+
+    <script>
+          // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '每日用户注册表',
+                show: true
+            },
+            tooltip: {},
+            legend: {
+                data:['注册情况']
+            },
+
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        $.ajax({
+            url:"/user/qushi/",
+            type: 'get',
+            dataType:'json',
+            success: function (data) {
+               console.log(data);
+                myChart.setOption({
+                    xAxis:{
+                        data: data.name,
+                        show: true
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '注册情况',
+                        type: 'line',
+                        data: data.value
+                    }]
+                });
+            }
+        });
+
+    </script>

@@ -1,0 +1,59 @@
+<script>
+    $(function () {
+        $("#bannerTable").jqGrid({
+            url: "/user/get_user_data/",
+            datatype: "json",
+            styleUI: "Bootstrap",
+            autowidth: true,
+            height: 300,
+            pager: "#userPagerNew",
+            viewrecords: true,
+            rownumbers: true,
+            multiselect: false,
+            rowNum: 3,
+            rowList: [2, 5, 8],
+            editurl: "/user/edit_user_data/",
+            colNames: ["编号","账号","状态","地址 ","创建时间","操作"],
+            colModel: [
+                {name: "id", align: "center",},
+                {name: "title", align: "center", editable: false, editrules: {required: true}},
+                {name: "status", align: "center", editable: true, edittype: "select", editoptions: {
+                        value: "激活:激活;未激活:未激活",}},
+                {name: "address", align: "center", editable: false, editrules: {required: true}},
+                {name: "createDate", align: "center",},
+                {name: "option",
+                      formatter: function (value, options, row) {
+                        console.log(options);
+                        var content = "<a class='btn btn-primary' onclick=\'javascript:edit(\"" + options.rowId + "\")\'><span class=' glyphicon glyphicon-duplicate'> 修改</span></ a>";
+                        return content
+                    }
+                }
+            ],
+        });
+    });
+    function edit(id) {
+        $("#bannerTable").jqGrid('editGridRow', id, {
+            reloadAfterSubmit: false
+        });
+    }
+
+</script>
+
+
+<div class="page-header">
+    <h2>用户状态管理</h2>
+</div>
+<ul class="nav nav-tabs ">
+    <li class="active"><a href="#"><b>用户状态信息</b></a></li>
+</ul>
+
+<div class="panel panel-default" style="padding: 40px">
+    <table id="bannerTable"></table>
+    <div class="alert alert-success" role="alert" id="addBannerMsg" style="display: none">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <strong id="msgShow"></strong>
+    </div>
+    <div id="userPagerNew" style="width: auto;height: 50px"></div>
+</div>
+

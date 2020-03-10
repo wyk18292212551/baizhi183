@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="{% static 'boot/css/bootstrap.min.css' %}">
+    <script src="{% static 'boot/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'boot/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div class="panel">
+                <div><h1 class="">管理员登录:</h1></div>
+                <div class="panel-body">
+                    <div class="panel">
+                        <form action="" class="form-horizontal" id="from_login">
+                            <div class="form-group">
+                                <label for="username">账号:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <input type="text" id="username" name="username" onblur="check_username()">
+                                <span id="sname"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="userpwd">密码:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <input type="password" id="userpwd" name="userpwd" onblur="check_userpwd()">
+                                <span id="spwd"></span>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" id="tijiao" type="button" onclick="login()">登录</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+
+<script>
+
+    var flag = 0
+
+    function check_username() {
+        var value = $('#username').val();
+        if (value === '') {
+            {#alert('用户名为空')#}
+            $('#sname').html('用户名为空!')
+        } else {
+            flag += 1
+            $('#sname').html('✔️')
+        }
+    }
+
+    function check_userpwd() {
+        var value = $('#userpwd').val();
+        if (value === '') {
+            {#alert('用户名为空')#}
+            $('#spwd').html('密码不能为空!')
+        } else {
+            flag += 1
+        }
+    }
+    function login() {
+                $.ajax({
+                    type: "post",
+                    url: "/rbac/user_login/",
+                    data: $("form").serialize(),
+                    success: function (data) {
+                        console.log(data);
+                        if (data.error === 1){
+                            alert(data.msg)
+                        }else{
+                            location.href = "/lunbo/home/"
+                        }
+                    }
+                })
+            }
+
+</script>
+</body>
+</html>

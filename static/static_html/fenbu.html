@@ -1,0 +1,95 @@
+<div class="page-header">
+    <h2>用户分布</h2>
+</div>
+<div id="main" style="width:800px;height:600px;">
+</div>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    option = {
+        title : {
+            text: '注册用户人数分布图',
+            subtext: '仅供参考',
+            left: 'center'
+        },
+        tooltip : {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data:['人数']
+        },
+        visualMap: {
+            min: 0,
+            max: 20,
+            left: 'left',
+            top: 'bottom',
+            text:['高','低'],           // 文本，默认为数值文本
+            calculable : true
+        },
+        toolbox: {
+            show: true,
+            orient : 'vertical',
+            left: 'right',
+            top: 'center',
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        series : [
+            {
+                name: '人数',
+                type: 'map',
+                mapType: 'china',
+                roam: false,
+                label: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+
+                ]
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    // 发起异步请求获取数据
+    $.ajax({
+        url:"/user/get_map/",
+        type: 'get',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            myChart.setOption({
+                series : [{
+                    name: '人数',
+                    type: 'map',
+                    mapType: 'china',
+                    roam: false,
+                    label: {
+                        normal: {
+                            show: false
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    data:data
+                }
+                ]
+            });
+        }
+    });
+
+</script>
+

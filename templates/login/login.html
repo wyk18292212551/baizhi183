@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'boot/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'boot/js/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jq2/lib/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jq2/dist/jquery.validate.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jq2/dist/localization/messages_zh.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'boot/js/bootstrap.min.js' %}"></script>
+    <style>
+        input.error { border: 1px solid red; }
+    </style>
+    <script type="text/javascript">
+        	//jQuery.validator.addMethod("aaaa", function(value) {
+            //return true 错误信息消失
+            //return falsse 错误信息提示
+            //return value.length==7
+            //}, $.validator.format("验证错误"));
+        var countdown = 60;
+
+        function settime(obj) {
+            if (countdown == 0) {
+                obj.removeAttribute("disabled");
+                obj.value = "免费获取验证码";
+                countdown = 60;
+                return;
+            } else {
+                obj.setAttribute("disabled", true);
+                obj.value = "重新发送(" + countdown + ")";
+                countdown--;
+            }
+            setTimeout(function () {
+                    settime(obj)
+                }
+                , 1000)
+        }
+
+        $(function () {
+            // 点击获取验证码， 向后台发送请求验证码
+            $('#forcode').click(function () {
+
+                // 向后台发送ajax请求获取验证码
+                $.ajax({
+                    url: "{% url 'login:get_code' %}",
+                    type: "POST",
+                    data: {mobile: $("#mobile").val()},       // 将手机号参数传至后台
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            // 在键盘按下并释放及提交后验证提交表单
+            $("#loginForm").validate({
+                //写匹配规则
+                rules: {
+                    //字段的name属性:"校验器"
+                    mobile: {
+                        required: true,//验证是否存在，不存在提示
+                        digits: true,//验证是否是数字
+                        rangelength: [11, 11],//验证长度
+
+                    },//required在此含义是必填
+                    //字段的name属性:{校验器:值,校验器:值}
+                    name: {
+                        required: true,
+                        minlength: 3,
+                        aaaa:true
+                    },
+                    code: {required: true,}
+                },
+                //写错误信息
+                messages: {
+                    mobile: "请输入11位有效电话号码",
+                    name: "名字长度不小于3位",
+                    code: "不得为空",
+
+                },
+                submitHandler: function (form) {
+
+                    $.ajax({
+                        url: "{% url 'login:check_user' %}",
+                        type: "POST",
+                        data: {mobile: $("#mobile").val(), name: $("#basic-url").val(), code: $("#basic-url2").val()},       // 将手机号参数传至后台
+                        success: function (data) {
+                            alert(data);
+                            if (data === '验证成功') {
+                                location.href = "{% url 'indexapp:index' %}"
+                            } else {
+                                $('#loginForm').reset()
+                            }
+                        }
+                    });
+
+                },
+
+            });
+        });
+    </script>
+</head>
+<body>
+<!--手机号码输入框代码-->
+<div class="container">
+    <div class="form-group">
+        <div class="col-lg-10">
+            <form id="loginForm" role="form" action="" method="post" class="form-horizontal">
+                <label for="mobile" class="">手机号码:</label>
+                <div class="input-group m-bot15">
+                    <input type="text" id="mobile" name="mobile" placeholder="手机号码" class="form-control" required>
+                    <span class="input-group-btn">
+                         <input type="button" id="forcode" onclick="settime(this)" value="免费获取验证码"
+                                class="btn btn-success">
+                    </span>
+                </div>
+                <span id="msgDiv"></span>
+                <p class="help-block">请填写绑定手机号</p>
+                <label for="basic-url" class="">用户名</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="basic-url" minlength="5" name="name" required>
+{#                    <span class="input-group-addon"></span>#}
+                </div>
+                <label for="basic-url2" class="">验证码：</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="basic-url2" required name="code">
+                </div>
+                <p class="help-block"></p>
+                <div class="input-group">
+                    <input class="btn btn-success" type="submit" id="loginButtonId" value="登录">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

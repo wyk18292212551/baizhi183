@@ -1,0 +1,342 @@
+<script>
+    $(function () {
+        $('#albumTable').jqGrid({
+            url: "/album/get_album_data",
+            datatype: "json",
+            styleUI: "Bootstrap",
+            autowidth: true,
+            height: 400,
+            pager: "#albumPager",
+            viewrecords: true,
+            rownumbers: true,
+            cellEdit: true,
+            hiddengrid: false,
+            multiselect: true,
+            toolbar: [true, "top"],
+            rowNum: 3,
+            rowList: [2, 3, 4],
+            editurl: "/album/edit_album/",
+            colNames: ["编号", "标题", "分数", "作者", "播音员", "章节数", "专辑简介", "状态", "上传时间", "插图"],
+            colModel: [
+                {name: "id", hidden: true},
+                {name: "title", editable: true, editrules: {required: true}},
+                {name: "score", editrules: {required: true, number: true, minValue: 1, maxValue: 10}},
+                {name: "author", editable: true, editrules: {required: true}},
+                {name: "broadcast", editrules: {required: true}},
+                {name: "count", editable: true, editrules: {required: true, number: true, minValue: 1}},
+                {name: "brief", editable: true, editrules: {required: true}},
+                {name: "status", editable: true, edittype: "select",
+                    editoptions: {value: "展示:展示;不展示:不展示"}},
+                {name: "publishDate", editable: true, edittype: "date", editrules: {required: true}},
+                {name: "cover", align: "center",
+                    formatter: function (cellValue) {
+                        console.log(cellValue)
+                        return "<img style='height: 80px;width: 180px' src='/static/" + cellValue + " '/>"
+                    },
+                },
+
+            ],
+            subGrid: true,          // 开启子表格的支持
+            subGridRowExpanded: function (subGridId, albumId) {
+                console.log(subGridId);
+                console.log(albumId);
+                addSubGrid(subGridId, albumId);         // 指定二级表格的参数
+            }
+
+        }).jqGrid("navGrid", "#albumPager", {});
+        $("#t_albumTable").append("<button class=\"btn btn-primary\" onclick=\"showChapter1()\">添加专辑</button>")
+    });
+
+    // 生成二级表格的方法
+    function addSubGrid(subGridId, albumId) {
+        // 先生成容器的id
+        subGridTableId = subGridId + "table";     //   根据专辑的id动态的为二级表格生成的table的id
+        subGridPagerId = subGridId + "pager";     //   作为二级表格的分页的id
+        albumIdss = albumId + "2";
+        console.log(albumIdss);
+        // 二级表格需要容器
+        $("#" + subGridId).html(
+            "<table id='" + subGridTableId + "'></table>" +
+            "<div id='" + subGridPagerId + "'></div>"
+        );
+        // 指定二级表格的参数
+        $("#" + subGridTableId).jqGrid({
+            url: "/album/get_chapter_data/?albumId=" + albumId,
+            datatype: "json",
+            styleUI: "Bootstrap",
+            autowidth: true,
+            pager: "#" + subGridPagerId,
+            rowNum: 2,
+            rowList: [2, 5, 10],
+            viewrecords: true,
+            caption: "章节管理",
+            toolbar: [true, "top"],
+            cellEdit: true,
+            multiselect: true,
+            editurl: "/album/edit_chapter/",
+            colNames: ["ID", "章节名", "大小", "时长", "创建时间", "操作"],
+            colModel: [
+                {name: "id"},
+                {name: "title", editable: true},
+                {name: "size",},
+                {name: "duration",},
+                {name: "createDate", editable: true},
+                {name: "url",
+                    formatter: function (cellValue, options, rowObject) {
+                        aaa = cellValue;
+                        console.log(cellValue,options,rowObject);
+                        return "<a href=\"javascript:void(0)\" onclick=\"playaudio(aaa)\" title=\"播放\" class=\"btn btn-primary\"> <span class=\"glyphicon glyphicon-play\"></span> 播放</a>"
+                    }
+                }
+            ],
+        }).jqGrid("navGrid", "#" + subGridPagerId, {});
+        console.log(albumId, "111111");
+        $("#t_" + subGridTableId).append("<button class=\"btn btn-primary\" onclick=\"showChapter2(" + albumId + ")\">添加章节</button>")
+    }
+
+    function showChapter2(id) {
+        console.log(id)
+        // 专辑id
+        // 展示模态框
+        $("#myModal2").modal("show");
+        // 追加脚注
+        $("#modal_footer2").html(" <button class=\"btn btn-primary\" onclick=\"addChapter(" + id + ")\">保存</button>\n" +
+            "                <button class=\"btn btn-danger\" data-dismiss=\"modal\">取消</button>");
+
+    }
+    function showChapter1() {
+        // 专辑id
+        // 展示模态框
+        $("#myModal1").modal("show");
+        // 追加脚注
+        $("#modal_footer1").html(" <button class=\"btn btn-primary\" onclick=\"addChapter1()\">保存</button>\n" +
+            "                <button class=\"btn btn-danger\" data-dismiss=\"modal\">取消</button>");
+    }
+
+    function addChapter1() {
+        // 使用formdata获取参数
+        var pic = $("#file_name1")[0].files[0];
+        var biaoti = $.trim($("#title").val());
+        var fenshu = $.trim($("#fenshu").val());
+        var zuozhe = $.trim($("#zuozhe").val());
+        var boyin = $.trim($("#boyin").val());
+        var zhangjieshu = $.trim($("#zhangjieshu").val());
+        var jianjie = $.trim($("#jianjie").val());
+        var status = $.trim($("#status").val());
+        var faxingshijian = $.trim($("#faxingshijian").val());
+
+
+        var formdata = new FormData;
+        formdata.append("biaoti", biaoti)
+        formdata.append("fenshu", fenshu)
+        formdata.append("zuozhe", zuozhe)
+        formdata.append("boyin", boyin)
+        formdata.append("zhangjieshu", zhangjieshu)
+        formdata.append("jianjie", jianjie)
+        formdata.append("status", status)
+        formdata.append("faxingshijian", faxingshijian)
+        formdata.append("pic", pic)
+        // 想后台发送ajax请求添加章节
+        $.ajax({
+            url: "/album/add_album/",
+            type: "post",
+            datatype: "json",
+            data: formdata,
+            processData: false,         // 使表单对象不被调整
+            contentType: false,         // 不要设置contentType请求头
+            success: function (data) {
+                console.log(data);
+                if (data.error == 1) {
+                    alert(data.msg)
+                } else {
+                    $("#myModal1").modal("hide");
+                    // 刷新表格
+                    $("#albumTable").trigger("reloadGrid")
+                }
+            }
+        });
+    }
+    // 添加章节的方法
+    function addChapter(id) {
+        console.log(id, 11111111111111122222)
+        // 使用formdata获取参数
+        var mmpp3 = $("#file_name")[0].files[0];
+        var zhangjieming = $.trim($("#zhangjieming").val());
+        var idss = id;
+        var formdata = new FormData;
+        formdata.append("mmpp3", mmpp3)
+        formdata.append("zhangjieming", zhangjieming)
+        formdata.append("idss", idss)
+
+        // 想后台发送ajax请求添加章节
+        $.ajax({
+            url: "/album/add_chapter/",
+            type: "post",
+            datatype: "json",
+            data: formdata,
+            processData: false,         // 使表单对象不被调整
+            contentType: false,         // 不要设置contentType请求头
+            success: function (data) {
+                console.log(data);
+                if (data.error == 1) {
+                    alert(data.msg)
+                } else {
+                    $("#myModal2").modal("hide");
+                    // 刷新表格
+                    $("#" + subGridTableId).trigger("reloadGrid")
+                }
+            }
+        });
+    }
+    //播放音频的方法
+    function playaudio(url) {
+        console.log(url,55555555555555555555555555)
+        $("#playAudioDiv").modal('show');
+        $("#playAudioId").attr("src","/static/"+url);
+    }
+
+
+</script>
+
+<!--<a href="javascript:void(0)" onclick="playaudio()" title="播放" class="btn btn-primary"> <span class="glyphicon glyphicon-bell"></span> 播放</a>-->
+<div class="page-header">
+    <h2>专辑与章节管理</h2>
+</div>
+<ul class="nav nav-tabs">
+    <li class="active" style="font-weight: bold"><a>专辑与章节信息</a></li>
+</ul>
+<!--// 用来播放音频的html标签-->
+<div id="playAudioDiv" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <audio id="playAudioId" src='' controls></audio>
+    </div>
+</div>
+
+
+
+<div class="panel panel-default">
+    <table id="albumTable"></table>
+    <div id="albumPager" style="width: auto;height: 50px"></div>
+</div>
+
+<div class="modal fade" id="myModal1" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:750px">
+            <!--模态框标题-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">编辑专辑信息</h4>
+            </div>
+            <!--模态框内容体-->
+            <div class="modal-body">
+                <form action="" class="form-horizontal"
+                      id="chapterForm">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">标题</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="title" id="title" placeholder="请输入标题" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">分数</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="fenshu" id="fenshu" placeholder="请输入分数" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">作者</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="zuozhe" id="zuozhe" placeholder="请输入作者" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">播音员</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="boyin" id="boyin" placeholder="请输入播音员" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">章节数</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="zhangjieshu" id="zhangjieshu" placeholder="请输入数量"
+                                   class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">简介</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="jianjie" id="jianjie" placeholder="请输入简单介绍" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">状态</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" name="status" id="status">
+                                <option value="展示">展示</option>
+                                <option value="不展示">不展示</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">发行时间</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="faxingshijian" id="faxingshijian" placeholder="请输入发行时间"
+                                   class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">图片</label>
+                        <div class="col-sm-5">
+                            <input type="file" name="file" id="file_name1" placeholder="请选择图片" class="form-control">
+                        </div>
+                    </div>
+                    <input id="addInsertImg" name="insertImg" hidden>
+                </form>
+            </div>
+            <!--模态页脚-->
+            <div class="modal-footer" id="modal_footer1">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal2" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:750px">
+            <!--模态框标题-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">编辑章节信息</h4>
+            </div>
+            <!--模态框内容体-->
+            <div class="modal-body">
+                <form action="" class="form-horizontal"
+                      id="chapterForm">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">章节名</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="zhangjieming" id="zhangjieming" placeholder="请输入名称"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">音频</label>
+                        <div class="col-sm-5">
+                            <input type="file" name="file_name" id="file_name" placeholder="请选择文件" class="form-control">
+                        </div>
+                    </div>
+                    <input id="addInsertImg" name="insertImg" hidden>
+                </form>
+            </div>
+            <!--模态页脚-->
+            <div class="modal-footer" id="modal_footer2">
+
+            </div>
+        </div>
+    </div>
+</div>
