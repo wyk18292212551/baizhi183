@@ -17,6 +17,8 @@ def get_album_data(request):
     for i in page:
         rows.append(i)
 
+
+
     page_data = {
         "total": all_page.num_pages,
         "records": all_page.count,

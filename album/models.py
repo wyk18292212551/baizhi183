@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Zhuanji(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     score = models.FloatField(blank=True, null=True)
