@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b48c4f3b-0f95-45ba-be5c-222435ff3cc6" name="Default Changelist" comment="添加专辑">
+    <list default="true" id="b48c4f3b-0f95-45ba-be5c-222435ff3cc6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/album/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/album/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,90 +19,39 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/static_html/article.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
+            <state relative-caret-position="-637">
               <caret line="99" column="58" lean-forward="true" selection-start-line="99" selection-start-column="58" selection-end-line="99" selection-end-column="58" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/static_html/banner.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-512">
-              <caret line="249" column="79" selection-start-line="249" selection-start-column="79" selection-end-line="249" selection-end-column="79" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/static_html/fenbu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1717" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/static_html/guanliyuan.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-581">
-              <caret line="328" column="79" selection-start-line="328" selection-start-column="79" selection-end-line="328" selection-end-column="79" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/static_html/qushi.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-314" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/static_html/user.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-903" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/static_html/zhuanji.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7251" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/album/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
-            </state>
+            <state relative-caret-position="-4140" />
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/album/urls.py">
+        <entry file="file://$PROJECT_DIR$/album/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="-581">
+              <caret line="135" column="25" lean-forward="true" selection-start-line="135" selection-start-column="25" selection-end-line="135" selection-end-column="25" />
               <folding>
-                <element signature="e#0#28#0" expanded="true" />
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#2789#3071#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/album/views.py">
+        <entry file="file://$PROJECT_DIR$/album/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-575">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="253">
+              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#2345#3201#0" />
-                <element signature="e#2789#3071#0" />
-                <element signature="e#3244#4015#0" />
-                <element signature="e#4061#4794#0" />
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -143,8 +93,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="375" />
-    <option name="y" value="3" />
+    <option name="x" value="372" />
+    <option name="y" value="7" />
     <option name="width" value="1455" />
     <option name="height" value="989" />
   </component>
@@ -165,12 +115,23 @@
             <path>
               <item name="CMFW_WYK" type="b2602c69:ProjectViewProjectNode" />
               <item name="CMFW_WYK" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="album" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CMFW_WYK" type="b2602c69:ProjectViewProjectNode" />
               <item name="CMFW_WYK" type="462c0819:PsiDirectoryNode" />
-              <item name="tools" type="462c0819:PsiDirectoryNode" />
+              <item name="media" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CMFW_WYK" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CMFW_WYK" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CMFW_WYK" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CMFW_WYK" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="static_html" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -243,7 +204,7 @@
       <option name="presentableId" value="Default" />
       <updated>1583804795520</updated>
       <workItem from="1583804798715" duration="7713000" />
-      <workItem from="1583886756072" duration="2485000" />
+      <workItem from="1583886756072" duration="4947000" />
     </task>
     <task id="LOCAL-00001" summary="修改数据库">
       <created>1583823691842</created>
@@ -266,28 +227,34 @@
       <option name="project" value="LOCAL" />
       <updated>1583888005589</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="添加专辑">
+      <created>1583889252344</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1583889252344</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10198000" />
+    <option name="totallyTimeSpent" value="12660000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="300" y="3" width="1164" height="791" extended-state="0" />
-    <editor active="true" />
+    <frame x="298" y="6" width="1164" height="791" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16907775" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16907775" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32928678" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32978722" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32928678" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49909583" weight="0.32928678" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49909583" weight="0.32776934" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50090414" side_tool="true" weight="0.32776934" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49909583" weight="0.32776934" />
@@ -561,13 +528,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/static_html/article.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="99" column="58" lean-forward="true" selection-start-line="99" selection-start-column="58" selection-end-line="99" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/static_html/banner.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-512">
@@ -597,25 +557,6 @@
         <state relative-caret-position="-903" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/static_html/zhuanji.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7251" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/album/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-575">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#2345#3201#0" />
-            <element signature="e#2789#3071#0" />
-            <element signature="e#3244#4015#0" />
-            <element signature="e#4061#4794#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/album/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="46">
@@ -623,12 +564,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/static_html/article.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-637">
+          <caret line="99" column="58" lean-forward="true" selection-start-line="99" selection-start-column="58" selection-end-line="99" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/static_html/zhuanji.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4140" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/album/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="253">
+          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/album/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-581">
+          <caret line="135" column="25" lean-forward="true" selection-start-line="135" selection-start-column="25" selection-end-line="135" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#2789#3071#0" />
           </folding>
         </state>
       </provider>
