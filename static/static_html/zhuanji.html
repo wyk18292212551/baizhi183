@@ -74,26 +74,41 @@
             cellEdit: true,
             multiselect: true,
             editurl: "/album/edit_chapter/",
-            colNames: ["ID", "章节名", "大小", "时长", "创建时间", "操作"],
+            colNames: ["ID", "章节名", "大小", "时长", "创建时间", "音频", "操作"],
             colModel: [
-                {name: "id"},
-                {name: "title", editable: true},
-                {name: "size",},
-                {name: "duration",},
-                {name: "createDate", editable: true},
-                {name: "url",
-                    formatter: function (cellValue, options, rowObject) {
+                {name: "id",align: "center"},
+                {name: "title", editable: true,align: "center"},
+                {name: "size",align: "center"},
+                {name: "duration",align: "center"},
+                {name: "createDate", editable: true,align: "center"},
+                {
+                    name: "url",align: "center", formatter: function (cellValue, options, rowObject) {
                         aaa = cellValue;
                         console.log(cellValue,options,rowObject);
-                        return "<a href=\"javascript:void(0)\" onclick=\"playaudio(aaa)\" title=\"播放\" class=\"btn btn-primary\"> <span class=\"glyphicon glyphicon-play\"></span> 播放</a>"
+                        return "<a href=\"javascript:void(0)\" class=\"btn btn-primary\" onclick=\"playAudio('" + cellvalue + "')\"><span class=\"glyphicon glyphicon-play\"></span> 播放</a>"+
+                                "<a href=\"javascript:void(0)\" class=\"btn btn-primary\" onclick=\"playAudio('" + cellvalue + "')\"><span class=\"glyphicon glyphicon-download-alt\"></span> 下载</a>"
                     }
-                }
+
+                },
+                {
+                    name: "option",
+                    formatter: function (cellvalue, options, rowObject) {//JSON.stringify(rowObject).replace(/"/g, '&quot;
+                        var result = '';
+                        result += "<a href='javascript:void(0)' onclick=\"showModel('" + rowObject.id + "')\" class='btn btn-lg' title='查看详情'> <span class='glyphicon glyphicon-th-list'>编辑</span></a>" +
+                            "<a href='javascript:void(0)' onclick=\"delModel('" + rowObject.id + "')\" class='btn btn-lg' title='删除'> <span class='glyphicon glyphicon-king'>删除</span></a>";
+                        return result;
+                    }
+                },
+
             ],
         }).jqGrid("navGrid", "#" + subGridPagerId, {});
         console.log(albumId, "111111");
         $("#t_" + subGridTableId).append("<button class=\"btn btn-primary\" onclick=\"showChapter2(" + albumId + ")\">添加章节</button>")
     }
-
+    {#//对二级表格的编辑和删除#}
+    {#function showModel(id) {#}
+    {#    #}
+    //}
     function showChapter2(id) {
         console.log(id)
         // 专辑id
@@ -194,7 +209,11 @@
         $("#playAudioDiv").modal('show');
         $("#playAudioId").attr("src","/static/"+url);
     }
-
+    //下载音频
+    function download(url) {
+        console.log(url);
+        location.href="/album/download/?value="+url
+    }
 
 </script>
 

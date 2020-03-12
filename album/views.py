@@ -1,7 +1,9 @@
 import json
 import time
+
+
 from django.core.paginator import Paginator
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
 from mutagen.mp3 import MP3
 
@@ -175,6 +177,11 @@ def edit_chapter(request):
         Zhuanji.objects.get(pk=id).delete()
     return HttpResponse()
 
-
-
+def download(request):
+    value = request.GET.get("value")
+    file = open("media/zhangjie_pics/"+value,'rb')
+    res = FileResponse(file)
+    res["Content-Type"] = "application/octet-stream"
+    res["Content-Disposition"] = "attachment;filename=123456789.mp3"
+    return res
 

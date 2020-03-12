@@ -1,7 +1,7 @@
 import time
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from user.models import User
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
@@ -69,5 +69,11 @@ def check_user(request):
     else:
         return HttpResponse ('验证码已过期！请重新发送短信')
     # return HttpResponse('验证成功')
-
+def quit(request):
+    # 重定向
+    res = redirect('login:login')
+    # 用户名的存储周期设为0
+    res.delete_cookie('name')
+    # 清除存的session
+    request.session.flush()
 

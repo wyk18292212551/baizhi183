@@ -27,7 +27,7 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
         <li><a>欢迎:{{ name }}</a></li>
-        <li><a href="">退出登录 <span class="glyphicon glyphicon-log-out"></span></a></li>
+        <li><a href="#" onclick="quit()">退出登录 <span class="glyphicon glyphicon-log-out"></span></a></li>
     </ul>
 </nav>
 <!--栅格系统-->
@@ -37,8 +37,7 @@
         <div class="col-sm-2">
             <!--面板组：折叠面板/手风琴-->
             <div class="panel-group" id="panel_parent">
-{#                {% for item in request.session.menu_list %}#}
-{#                    {% if item.title == "访问用户列表页面并回显" %}#}
+
                         <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -48,23 +47,29 @@
                     <div id="aa" class="panel-collapse collapse ">
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a style="font-weight: bold;"
-                                       href="javascript:$('#centerLayout').load('{% static "static_html/user.html" %}')">用户列表</a>
-                                </li>
-
-                                <li><a style="font-weight: bold;"
-                                       href="javascript:$('#centerLayout').load('{% static "static_html/qushi.html" %}')">用户注册趋势图</a>
-                                </li>
-
-                                <li><a style="font-weight: bold;"
-                                       href="javascript:$('#centerLayout').load('{% static "static_html/fenbu.html" %}')">用户分布图</a>
-                                </li>
+                                {% for item in request.session.menu_list %}
+                                    {% if "用户" in item.title  %}
+                                        <li><a style="font-weight: bold;"
+                                               href="javascript:$('#centerLayout').load('{{ item.url }}')">{{ item.title }}</a>
+                                        </li>
+{#                                <li><a style="font-weight: bold;"#}
+{#                                       href="javascript:$('#centerLayout').load('{% static "static_html/user.html" %}')">用户列表</a>#}
+{#                                </li>#}
+{##}
+{#                                <li><a style="font-weight: bold;"#}
+{#                                       href="javascript:$('#centerLayout').load('{% static "static_html/qushi.html" %}')">用户注册趋势图</a>#}
+{#                                </li>#}
+{##}
+{#                                <li><a style="font-weight: bold;"#}
+{#                                       href="javascript:$('#centerLayout').load('{% static "static_html/fenbu.html" %}')">用户分布图</a>#}
+{#                                </li>#}
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
                 </div>
-{#                    {% endif %}#}
-{#                {% endfor %}#}
+
 {#                {% for item in request.session.menu_list %}#}
 {#                    {% if item.title == "访问专辑列表" %}#}
                         <div class="panel panel-default">
@@ -107,7 +112,7 @@
 {#                {% endfor %}#}
 {#                {% for item in request.session.menu_list %}#}
 {#                    {% if item.title == "轮播图的回显函数" %}#}
-                        <div class="panel panel-default">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
                             <a href="#cc" data-toggle="collapse" data-parent="#panel_parent"><h4>轮播图管理</h4></a>
@@ -125,7 +130,22 @@
                 </div>
 {#                    {% endif %}#}
 {#                {% endfor %}#}
-
+                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <a href="#hh" data-toggle="collapse" data-parent="#panel_parent"><h4>管理员管理</h4></a>
+                        </div>
+                    </div>
+                    <div id="hh" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a style="font-weight: bold;"
+                                       href="javascript:$('#centerLayout').load('{% static "static_html/guanliyuan.html" %}')">管理员列表</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-10" id="centerLayout">
@@ -182,7 +202,11 @@
     <a style="color: black;">@百知教育 baizhi@zparkhr.com.cn</a>
 </nav>
 
-
+<script>
+    function quit() {
+        location.href='{% url "login:quit" %}'
+    }
+</script>
 </body>
 
 

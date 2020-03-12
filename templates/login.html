@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{% static 'boot/css/bootstrap.min.css' %}">
     <script src="{% static 'boot/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'boot/js/bootstrap.min.js' %}"></script>
+    <script>
+        $.ajaxSetup({
+            data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+        })
+    </script>
 </head>
 <body>
 
@@ -19,7 +24,7 @@
                 <div><h1 class="">管理员登录:</h1></div>
                 <div class="panel-body">
                     <div class="panel">
-                        <form action="" class="form-horizontal" id="from_login">
+                        <form action="{% url 'rbac:check_user' %}" class="form-horizontal" id="from_login">
                             <div class="form-group">
                                 <label for="username">账号:&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                 <input type="text" id="username" name="username" onblur="check_username()">
@@ -70,7 +75,7 @@
     function login() {
                 $.ajax({
                     type: "post",
-                    url: "/rbac/user_login/",
+                    url: "/rbac/check_user/",
                     data: $("form").serialize(),
                     success: function (data) {
                         console.log(data);
