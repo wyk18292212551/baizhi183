@@ -24,7 +24,7 @@ def init_permission(user, request):
                 'url': item['permissions__url'],
             }
             menu_list.append(temp)
-
+    print(menu_list)
     # 将菜单的权限列表存入session
     request.session[MENU_LIST] = menu_list
 

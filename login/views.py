@@ -76,4 +76,5 @@ def quit(request):
     res.delete_cookie('name')
     # 清除存的session
     request.session.flush()
+    return res
 

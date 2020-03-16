@@ -10,17 +10,16 @@
     <script type="text/javascript" src="{% static 'jq2/lib/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'jq2/dist/jquery.validate.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'jq2/dist/localization/messages_zh.js' %}"></script>
-
     <script type="text/javascript" src="{% static 'boot/js/bootstrap.min.js' %}"></script>
+    <script>
+        $.ajaxSetup({
+            data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+        })
+    </script>
     <style>
         input.error { border: 1px solid red; }
     </style>
     <script type="text/javascript">
-        	//jQuery.validator.addMethod("aaaa", function(value) {
-            //return true 错误信息消失
-            //return falsse 错误信息提示
-            //return value.length==7
-            //}, $.validator.format("验证错误"));
         var countdown = 60;
 
         function settime(obj) {

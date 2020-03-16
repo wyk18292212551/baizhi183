@@ -70,8 +70,7 @@
                     </div>
                 </div>
 
-{#                {% for item in request.session.menu_list %}#}
-{#                    {% if item.title == "访问专辑列表" %}#}
+
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="panel-title">
@@ -81,17 +80,19 @@
                             <div id="dd" class="panel-collapse collapse ">
                                 <div class="panel-body">
                                     <ul class="nav nav-pills nav-stacked">
+                                        {% for item in request.session.menu_list %}
+                                            {% if "专辑" in item.title %}
                                         <li><a style="font-weight: bold;"
-                                               href="javascript:$('#centerLayout').load('{% static "static_html/zhuanji.html" %}')">专辑列表</a>
+                                               href="javascript:$('#centerLayout').load('{{ item.url }}')">{{ item.title }}</a>
                                         </li>
+                                            {% endif %}
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
-{#                    {% endif %}#}
-{#                {% endfor %}#}
-{#                {% for item in request.session.menu_list %}#}
-{#                    {% if item.title == "访问文章列表" %}#}
+
+
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="panel-title">
@@ -101,17 +102,19 @@
                             <div id="ee" class="panel-collapse collapse ">
                                 <div class="panel-body">
                                     <ul class="nav nav-pills nav-stacked">
+                                        {% for item in request.session.menu_list %}
+                                            {% if item.title == "文章列表" %}
                                         <li><a style="font-weight: bold;"
                                                href="javascript:$('#centerLayout').load('{% static "static_html/article.html" %}')">文章列表</a>
                                         </li>
+                                            {% endif %}
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
-{#                    {% endif %}#}
-{#                {% endfor %}#}
-{#                {% for item in request.session.menu_list %}#}
-{#                    {% if item.title == "轮播图的回显函数" %}#}
+
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -121,15 +124,18 @@
                     <div id="cc" class="panel-collapse collapse ">
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
+                                {% for item in request.session.menu_list %}
+                                    {% if "轮播图" in item.title  %}
                                 <li><a style="font-weight: bold;"
-                                       href="javascript:$('#centerLayout').load('{% static "static_html/banner.html" %}')">轮播图列表</a>
+                                       href="javascript:$('#centerLayout').load('{{ item.url }}')">{{ item.title }}</a>
                                 </li>
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
                 </div>
-{#                    {% endif %}#}
-{#                {% endfor %}#}
+
                  <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">

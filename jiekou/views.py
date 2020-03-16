@@ -148,7 +148,7 @@ def user_post(request):
     password = request.POST.get("password")
     city = request.POST.get('city')
     print(uids)
-    userss = User.objects.filter(pk=uids)[0]
+    userss = User.objects.filter(pk=uids)
     # print(userss)
     user_posts = []
     if userss:
